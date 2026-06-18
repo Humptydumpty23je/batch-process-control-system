@@ -10,6 +10,11 @@ The control software relies on event-driven state sequencing and strict safety i
 2. **Data Manipulation & Scaling:** Incorporates a Scale (`SCL`) block to process raw analog input data from plant instrumentation into engineering units.
 3. **Conditional Execution:** Employs a Greater Than (`GRT`) block to dynamically monitor process thresholds. Once the scaled variable clears the setpoint, the sequence triggers an on-delay timer (`TON`) to manage the precise mixing timeline.
 
+### 4. Discharge Phase & Reset
+* Triggers automatically upon timer completion, opening the discharge valve to empty the vessel.
+* The sequence terminates and resets the step counter back to the idle state once the scaled analog thresholds verify the vessel is fully cleared.
+
+![Batch Process Ladder Logic Diagram](ladder_logic3.png)
 ---
 
 ## Control Logic Architecture
