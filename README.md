@@ -30,3 +30,22 @@ This section demonstrates the conversion of the process variable and the dynamic
 - **Processor Platform:** Allen-Bradley MicroLogix / 1761 Micro-Discrete
 - **Development Environment:** RSLogix 500 / Virtual Workstation Deployment
 - **Instruction Set Utilized:** Bit interfaces (XIC, XIO, OTE), Data Conversion (SCL), Relational Compare (GRT), Timers (TON)
+---
+
+## Technical Process Breakdown
+
+### 1. Safety Permissives & Interlocks
+* Monitored via a master latch circuit requiring an active E-Stop status, zero fault signals, and a verified closed drain valve before the cycle can initialize.
+* If any safety condition is breached or the Stop button is pressed, the master `System_Active` bit drops out instantly, isolating all physical outputs.
+
+### 2. Volumetric Charging (Analog Data Scaling)
+* Utilizes analog input processing to scale raw channel integers (e.g., from a 4-20mA level transmitter) into physical volumetric engineering units (Liters).
+* High/Low comparison instructions (`GEQ`, `LES`) drive precise sequential charging for Feed Valve A and Feed Valve B until the target batch volume is reached.
+
+### 3. Agitation & Thermal Control
+* Activates the mixer motor via explicit Timer On Delay (`TON`) instruction blocks upon completion of the filling phase.
+* Includes hard safety interlocks requiring active mixer execution and minimum tank volume verification before enabling heating elements to prevent element burnout.
+
+### 4. Discharge Phase & Reset
+* Triggers automatically upon timer completion, opening the discharge valve to empty the vessel.
+* The sequence terminates and resets the step counter back to the idle state once the scaled analog thresholds verify the vessel is fully cleared.
