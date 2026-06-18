@@ -26,7 +26,7 @@ This section demonstrates the conversion of the process variable and the dynamic
 * Triggers automatically upon timer completion, opening the discharge valve to empty the vessel.
 * The sequence terminates and resets the step counter back to the idle state once the scaled analog thresholds verify the vessel is fully cleared.
 
-![Batch Process Ladder Logic Diagram](ladder_logic3.png)
+![Batch Process Ladder Logic Diagram](logic_part3.png)
 ---
 
 ## System Configuration
